@@ -1,0 +1,124 @@
+{
+	"info": {
+		"_postman_id": "636d64c4-81d7-4c67-aadd-4254d2e19222",
+		"name": "DRF endpoints testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET category list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"The status code of category list request is 200 \",  () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Asign the json response to a variable\r",
+							"const resp = pm.response.json();\r",
+							"\r",
+							"pm.test('Test if category property exists',  () => {\r",
+							"    pm.expect(resp['categories']).exist;\r",
+							"})\r",
+							"\r",
+							"const category_list = resp['categories']\r",
+							"pm.test('Test if the returned parameters in category list request are correct', () => {\r",
+							"    if (category_list.length > 0) {\r",
+							"        category_list.forEach( (item, _) => {\r",
+							"            pm.expect(item).to.be.an('object').that.has.all.keys('id','name', 'description','thumbnail','sub_categories')\r",
+							"        } )        \r",
+							"    }\r",
+							"})\r",
+							"\r",
+							"pm.test('Test if the subcategory key of the returned category list contains the needed parameters', () => {\r",
+							"\r",
+							"    category_list.forEach( (item, _) => {\r",
+							"        if (item.sub_categories.length > 0) {\r",
+							"            //If one item accomplish the requirements, all items will do too\r",
+							"            pm.expect(item['sub_categories'][0]).to.be.an('object').that.has.all.keys('id','name', 'description','thumbnail')\r",
+							"        }\r",
+							"    })\r",
+							"\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/categories",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST create category",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"The status code of category creation request is 201 \",  () => {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"// Asigns the json response to a variable\r",
+							"const resp = pm.response.json();\r",
+							"\r",
+							"pm.test('The success property is equals to true',  () => {\r",
+							"    pm.expect(resp['success']).to.eql(true);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Hokd33dddv\",\r\n    \"description\":\"Hola\"\r\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/category",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"category"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://127.0.0.1:8000/api/category"
+		}
+	]
+}
