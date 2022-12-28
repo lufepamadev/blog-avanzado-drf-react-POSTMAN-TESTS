@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "636d64c4-81d7-4c67-aadd-4254d2e19222",
-		"name": "DRF endpoints testing",
+		"_postman_id": "1ad7a5f0-8894-4cbf-9a75-9c96ad504ee2",
+		"name": "DRF category endpoints testing",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
