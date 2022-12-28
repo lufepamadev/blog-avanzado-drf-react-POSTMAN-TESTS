@@ -24,7 +24,7 @@
 							"})\r",
 							"\r",
 							"const category_list = resp['categories']\r",
-							"pm.test('Test if the returned parameters in category list request are correct', () => {\r",
+							"pm.test('Test if the returned parameters in category list request are correct in case its length is greater than 0 ', () => {\r",
 							"    if (category_list.length > 0) {\r",
 							"        category_list.forEach( (item, _) => {\r",
 							"            pm.expect(item).to.be.an('object').that.has.all.keys('id','name', 'description','thumbnail','sub_categories')\r",
@@ -32,12 +32,13 @@
 							"    }\r",
 							"})\r",
 							"\r",
-							"pm.test('Test if the subcategory key of the returned category list contains the needed parameters', () => {\r",
+							"pm.test('Test if the subcategory key of the returned category list contains the needed parameters in case its length is greater than 0', () => {\r",
 							"\r",
 							"    category_list.forEach( (item, _) => {\r",
 							"        if (item.sub_categories.length > 0) {\r",
-							"            //If one item accomplish the requirements, all items will do too\r",
-							"            pm.expect(item['sub_categories'][0]).to.be.an('object').that.has.all.keys('id','name', 'description','thumbnail')\r",
+							"            item.sub_categories.forEach( (sub_item, _)  => {\r",
+							"                pm.expect(sub_item).to.be.an('object').that.has.all.keys('id','name', 'description','thumbnail')\r",
+							"            })\r",
 							"        }\r",
 							"    })\r",
 							"\r",
@@ -100,7 +101,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"Hokd33dddv\",\r\n    \"description\":\"Hola\"\r\n}"
+					"raw": "{\r\n    \"name\":\"test_name\",\r\n    \"description\":\"Hola\"\r\n}"
 				},
 				"url": {
 					"raw": "{{baseUrl}}/category",
